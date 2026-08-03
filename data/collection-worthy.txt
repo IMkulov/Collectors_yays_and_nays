@@ -1,0 +1,122 @@
+1 Expressive Iteration (SPG) 43
+1 Volcano of Roku's Island (TLE) 61 *F*
+1 Phyrexian Tower (MH3) 303
+1 Shifting Woodland (MH3) 228
+1 Play with Fire (MID) 154
+1 Cityscape Leveler (BRO) 233
+1 Smoke Bomb (ACR) 75 *F*
+1 Mesmerizing Benthid (RNA) 43
+1 Arcbound Condor (MH3) 81
+1 Party Thrasher (MH3) 129
+1 Equilibrium (EXO) 32
+1 Necrodominance (MH3) 102
+1 Hierophant's Chalice (XLN) 240
+1 Sky Skiff (KLD) 233
+1 Impervious Greatwurm (2X2) 152
+1 Search for Glory (KHM) 27 *F*
+1 Shepherd of the Cosmos (KHM) 28
+1 Sun-Crowned Hunters (XLN) 164
+1 Javelin of Lightning (CLB) 185
+1 Boing! (UNF) 40
+1 Bushy Bodyguard (BLB) 166
+1 Kastral, the Windcrested (BLB) 221
+1 Solid Ground (TLE) 142
+1 Slaughterhorn (MM3) 136
+1 Archaeomancer's Map (C21) 12
+1 Abundant Harvest (STA) 111
+1 Jeleva, Nephalia's Scourge (C13) 194
+1 Requiem Angel (DKA) 18
+1 Crimson Muckwader (M13) 127
+1 Gem of Becoming (M13) 205
+1 Professor Dellian Fel (PSOS) 214p
+1 Ojer Kaslem, Deepest Growth // Temple of Cultivation (LCI) 318
+1 Chaplain's Blessing (SOI) 10
+1 Watcher in the Web (SOI) 239
+1 Gibbering Fiend (SOI) 161
+1 Mindwrack Demon (SOI) 124
+1 Gonti's Aether Heart (AER) 152
+1 Release the Gremlins (AER) 96
+1 Kari Zev, Skyship Raider (AER) 87 *F*
+1 Untethered Express (AER) 179
+1 Servo Schematic (AER) 176
+1 Barricade Breaker (AER) 144
+1 Untethered Express (AER) 179
+1 Implement of Improvement (AER) 158
+1 Implement of Combustion (AER) 155
+1 Invigorated Rampage (AER) 86 *F*
+1 Scrapper Champion (AER) 97
+1 Ornithopter (AER) 167
+1 Reckless Racer (AER) 95
+1 Mardu Banner (KTK) 224
+1 Pledge of Loyalty (PLST) INV-24
+1 Sosuke's Summons (PLST) BOK-145
+1 Ravaging Blaze (ORI) 159
+1 Losheel, Clockwork Scholar (CMM) 38
+1 Nesting Dragon (CMM) 245
+1 Hazoret, Godseeker (DFT) 347
+1 Whisperer of the Wilds (2XM) 187
+1 Nest Robber (XLN) 152
+1 Daxos the Returned (PLST) C15-43
+1 Raiyuu, Storm's Edge (NEO) 329
+1 Squadron Hawk (M11) 33
+1 Tormented Hero (THS) 108
+1 Bituminous Blast (ARB) 34
+1 Vampire Hexmage (ZEN) 114
+1 Accorder Paladin (MBS) 1
+1 Temur Charm (KTK) 208
+1 Jhessian Infiltrator (ALA) 174
+1 Bomb Squad (ODY) 179
+1 Undying Evil (DKA) 77
+1 Dwarven Miner (MIR) 169
+1 Metathran Elite (PLST) UDS-38
+1 Benthic Giant (BBD) 113
+1 Siege Rhino (KTK) 200
+1 The Reality Chip (NEO) 74
+1 Tribute to Horobi // Echo of Death's Wail (NEO) 124
+1 Furnace Whelp (IMA) 129 *F*
+1 Prying Blade (XLN) 244
+1 Dusk Legion Dreadnought (XLN) 236
+1 Charging Monstrosaur (XLN) 138
+1 Bonded Horncrest (XLN) 133
+1 Imperial Aerosaur (XLN) 14
+1 Allied Strategies (PLS) 20
+1 Ancient Carp (DTK) 44
+1 Terastodon (C21) 207
+1 Brutalizer Exarch (NPH) 105
+1 Multani's Decree (UDS) 114
+1 Sosuke, Son of Seshiro (CHK) 244
+1 Sachi, Daughter of Seshiro (CHK) 238
+1 Firewake Sliver (TSP) 238
+1 Victual Sliver (STH) 131
+1 Carven Caryatid (RAV) 155
+1 Sharding Sphinx (ALA) 55
+1 Exava, Rakdos Blood Witch (DGM) 69
+1 Mindwhip Sliver (TMP) 145
+1 Empress Galina (INV) 54
+1 Sensei's Divining Top (EMA) 232
+1 Akroma's Will (LCC) 125
+1 Purphoros, God of the Forge (THS) 135
+1 Inkmoth Nexus (MBS) 145
+1 Zo-Zu the Punisher (SLC) 26
+1 Song of Creation (SLD) 1603
+1 Oboro, Palace in the Clouds (SOK) 164
+1 Elven Warhounds (TMP) 225
+1 Sprout Swarm (FUT) 138
+1 Culling Dais (MM2) 207
+1 Dragon Mask (VIS) 144
+1 Phyrexian Totem (TSP) 261
+1 Armix, Filigree Thrasher (BRC) 103
+1 Vengeful Dead (SCD) 117
+1 Vampire Hounds (EXO) 77
+1 Crypt Champion (DIS) 40
+1 Viscera Dragger (ALA) 92
+1 Knight of Dawn (TMP) 26
+1 Accorder Paladin (MBS) 1
+1 Magus of the Will (2XM) 98
+1 O-Naginata (2XM) 278
+1 Accorder's Shield (SOM) 136
+1 Spidersilk Net (ZEN) 206
+1 Minotaur Skullcleaver (THS) 130
+1 Captivating Crew (XLN) 137
+1 Keen-Eyed Curator (BLB) 181
+1 Favorable Winds (AVR) 51
