@@ -51,6 +51,11 @@ public class ScanController {
                 Path.of("data", "maybe.txt")
         );
 
+        moxfieldExportService.export(
+                result.getPreviouslySeen(),
+                Path.of("data", "previously-seen.txt")
+        );
+
         List<ProcessedCard> newCards = new ArrayList<>();
 
         newCards.addAll(result.getCollectionWorthy());
