@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 
 @Data
 public class ScryfallCardData {
+
     private String oracleId;
     private BigDecimal eurPrice;
+
+    private String imageUrl;
 }

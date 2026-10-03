@@ -13,4 +13,6 @@ public class ProcessedCard {
     private ScannedCard scannedCard;
     private String oracleId;
     private BigDecimal eurPrice;
+
+    private String imageUrl;
 }

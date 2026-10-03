@@ -40,7 +40,18 @@ public class ScryfallService {
         String eur = (String) prices.get("eur");
 
         if (eur != null) {
-            data.setEurPrice(new BigDecimal(eur));
+            data.setEurPrice(
+                    new BigDecimal(eur)
+            );
+        }
+
+        Map imageUris =
+                (Map) response.get("image_uris");
+
+        if (imageUris != null) {
+            data.setImageUrl(
+                    (String) imageUris.get("small")
+            );
         }
 
         return data;

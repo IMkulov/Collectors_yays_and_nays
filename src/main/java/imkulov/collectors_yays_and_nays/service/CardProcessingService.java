@@ -28,7 +28,8 @@ public class CardProcessingService {
                     new ProcessedCard(
                             card,
                             scryfallData.getOracleId(),
-                            scryfallData.getEurPrice()
+                            scryfallData.getEurPrice(),
+                            scryfallData.getImageUrl()
                     )
             );
         }

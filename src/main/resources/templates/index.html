@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
@@ -11,11 +12,53 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
+
+    <style>
+
+        .card-image {
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        .mtg-card {
+            transition: transform 0.15s ease;
+        }
+
+        .mtg-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .card-details {
+            font-size: 0.8rem;
+        }
+
+        .price {
+            font-weight: 600;
+        }
+
+        .duplicate-badge {
+            font-size: 0.8rem;
+        }
+
+    </style>
+
 </head>
+
 
 <body class="bg-light">
 
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
     <div class="container">
 
         <a class="navbar-brand"
@@ -24,143 +67,384 @@
         </a>
 
     </div>
+
 </nav>
 
 
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
 <main class="container py-5">
 
-    <div class="row justify-content-center">
 
-        <div class="col-lg-8">
+    <!-- =====================================================
+         SUCCESS MESSAGE
+         ===================================================== -->
+
+    <div th:if="${successMessage != null}"
+         class="alert alert-success alert-dismissible fade show"
+         role="alert">
+
+        <span th:text="${successMessage}">
+            Operation completed successfully.
+        </span>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
 
 
+    <!-- =====================================================
+         ERROR MESSAGE
+         ===================================================== -->
 
-            <div class="card shadow-sm mb-4">
+    <div th:if="${errorMessage != null}"
+         class="alert alert-danger alert-dismissible fade show"
+         role="alert">
 
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        Process ManaBox Scan
-                    </h5>
+        <span th:text="${errorMessage}">
+            An error occurred.
+        </span>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         FILE UPLOAD
+         ===================================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Process ManaBox Scan
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <p class="text-muted">
+                Select a CSV file exported from the ManaBox scanner.
+            </p>
+
+
+            <form method="post"
+                  action="/process"
+                  enctype="multipart/form-data"
+                  id="scanForm">
+
+
+                <div class="mb-3">
+
+                    <label for="file"
+                           class="form-label">
+                        ManaBox CSV
+                    </label>
+
+                    <input class="form-control"
+                           type="file"
+                           id="file"
+                           name="file"
+                           accept=".csv"
+                           required>
+
                 </div>
 
-                <div class="card-body">
 
-                    <form method="post"
-                          action="/process"
-                          enctype="multipart/form-data">
+                <button type="submit"
+                        class="btn btn-primary"
+                        id="processButton">
 
-                        <div class="mb-3">
+                    Process Scan
 
-                            <label for="file"
-                                   class="form-label">
-                                ManaBox CSV file
-                            </label>
+                </button>
 
-                            <input class="form-control"
-                                   type="file"
-                                   id="file"
-                                   name="file"
-                                   accept=".csv"
-                                   required>
 
-                        </div>
+                <div id="processingIndicator"
+                     class="mt-3 d-none">
 
-                        <button type="submit"
-                                class="btn btn-primary">
-                            Process Scan
-                        </button>
+                    <div class="spinner-border spinner-border-sm"
+                         role="status">
+                    </div>
 
-                    </form>
+                    <span class="ms-2">
+                        Processing scan...
+                    </span>
 
                 </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RESULTS
+         ===================================================== -->
+
+    <div class="card shadow-sm mb-4"
+         th:if="${collectionCount != null}">
+
+
+        <div class="card-header bg-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Current Scan
+                </h5>
 
             </div>
 
+        </div>
 
 
-
-            <div class="card shadow-sm mb-4"
-                 th:if="${collectionCount != null}">
-
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        Current Scan
-                    </h5>
-                </div>
-
-                <div class="card-body">
-
-                    <div class="row g-3">
+        <div class="card-body">
 
 
+            <!-- =============================================
+                 RESULT TABS
+                 ============================================= -->
 
-                        <div class="col-md-4">
+            <ul class="nav nav-tabs mb-4"
+                id="resultTabs"
+                role="tablist">
 
-                            <div class="border rounded p-3 h-100">
 
-                                <h6>
-                                    Collection Worthy
-                                </h6>
+                <!-- YAYS -->
 
-                                <p class="display-6"
-                                   th:text="${collectionCount}">
-                                    0
-                                </p>
+                <li class="nav-item"
+                    role="presentation">
 
-                                <a href="/download/collection"
-                                   class="btn btn-success w-100">
-                                    Download
-                                </a>
+                    <button class="nav-link active"
+                            id="collection-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#collection"
+                            type="button"
+                            role="tab">
 
-                            </div>
+                        Yays
+
+                        <span class="badge bg-success ms-1"
+                              th:text="${collectionCount}">
+                            0
+                        </span>
+
+                    </button>
+
+                </li>
+
+
+                <!-- MAYBE -->
+
+                <li class="nav-item"
+                    role="presentation">
+
+                    <button class="nav-link"
+                            id="maybe-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#maybe"
+                            type="button"
+                            role="tab">
+
+                        Maybe
+
+                        <span class="badge bg-warning text-dark ms-1"
+                              th:text="${maybeCount}">
+                            0
+                        </span>
+
+                    </button>
+
+                </li>
+
+
+                <!-- SEEN -->
+
+                <li class="nav-item"
+                    role="presentation">
+
+                    <button class="nav-link"
+                            id="seen-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#seen"
+                            type="button"
+                            role="tab">
+
+                        Seen Before
+
+                        <span class="badge bg-secondary ms-1"
+                              th:text="${seenCount}">
+                            0
+                        </span>
+
+                    </button>
+
+                </li>
+
+
+                <!-- DUPLICATES -->
+
+                <li class="nav-item"
+                    role="presentation">
+
+                    <button class="nav-link"
+                            id="duplicates-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#duplicates"
+                            type="button"
+                            role="tab">
+
+                        Duplicates
+
+                        <span class="badge bg-danger ms-1"
+                              th:text="${duplicateCount}">
+                            0
+                        </span>
+
+                    </button>
+
+                </li>
+
+            </ul>
+
+
+            <!-- =============================================
+                 TAB CONTENT
+                 ============================================= -->
+
+            <div class="tab-content"
+                 id="resultTabsContent">
+
+
+                <!-- =========================================
+                     COLLECTION WORTHY
+                     ========================================= -->
+
+                <div class="tab-pane fade show active"
+                     id="collection"
+                     role="tabpanel">
+
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+
+                            <h5 class="mb-1">
+                                Collection Worthy
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                New cards above the price threshold.
+                            </p>
 
                         </div>
 
 
+                        <a href="/download/collection"
+                           class="btn btn-success">
+
+                            Download TXT
+
+                        </a>
+
+                    </div>
 
 
-                        <div class="col-md-4">
+                    <div th:if="${#lists.isEmpty(collectionCards)}"
+                         class="alert alert-light border">
 
-                            <div class="border rounded p-3 h-100">
+                        No collection-worthy cards in this scan.
 
-                                <h6>
-                                    Maybe
-                                </h6>
-
-                                <p class="display-6"
-                                   th:text="${maybeCount}">
-                                    0
-                                </p>
-
-                                <a href="/download/maybe"
-                                   class="btn btn-warning w-100">
-                                    Download
-                                </a>
-
-                            </div>
-
-                        </div>
+                    </div>
 
 
+                    <div class="row g-4"
+                         th:if="${!#lists.isEmpty(collectionCards)}">
 
 
-                        <div class="col-md-4">
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-2"
+                             th:each="card : ${collectionCards}">
 
-                            <div class="border rounded p-3 h-100">
 
-                                <h6>
-                                    Previously Seen
-                                </h6>
+                            <div class="mtg-card h-100">
 
-                                <p class="display-6"
-                                   th:text="${seenCount}">
-                                    0
-                                </p>
 
-                                <a href="/download/seen"
-                                   class="btn btn-secondary w-100">
-                                    Download
-                                </a>
+                                <img th:if="${card.imageUrl != null}"
+                                     th:src="${card.imageUrl}"
+                                     th:alt="${card.scannedCard.name}"
+                                     class="card-image mb-2">
+
+
+                                <div th:if="${card.imageUrl == null}"
+                                     class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
+                                     style="aspect-ratio: 63 / 88;">
+
+                                    No image
+
+                                </div>
+
+
+                                <div class="card-name"
+                                     th:text="${card.scannedCard.name}">
+                                    Card name
+                                </div>
+
+
+                                <div class="card-details text-muted">
+
+                                    <span th:text="${card.scannedCard.setCode.toUpperCase()}">
+                                        SET
+                                    </span>
+
+                                    #
+
+                                    <span th:text="${card.scannedCard.collectorNumber}">
+                                        000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="price mt-1"
+                                     th:if="${card.eurPrice != null}">
+
+                                    €<span th:text="${card.eurPrice}">
+                                        0.00
+                                    </span>
+
+                                </div>
+
+
+                                <div class="text-muted small mt-1"
+                                     th:if="${card.eurPrice == null}">
+
+                                    Price unavailable
+
+                                </div>
+
+
+                                <span th:if="${card.scannedCard.foil == 'foil'}"
+                                      class="badge text-bg-info mt-1">
+
+                                    Foil
+
+                                </span>
+
 
                             </div>
 
@@ -170,37 +454,368 @@
 
                 </div>
 
-            </div>
+
+                <!-- =========================================
+                     MAYBE
+                     ========================================= -->
+
+                <div class="tab-pane fade"
+                     id="maybe"
+                     role="tabpanel">
 
 
-            <!-- History -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
 
-            <div class="card shadow-sm">
+                        <div>
 
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        Scan History
-                    </h5>
+                            <h5 class="mb-1">
+                                Maybe
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Cheap cards or cards without available price data.
+                            </p>
+
+                        </div>
+
+
+                        <a href="/download/maybe"
+                           class="btn btn-warning">
+
+                            Download TXT
+
+                        </a>
+
+                    </div>
+
+
+                    <div th:if="${#lists.isEmpty(maybeCards)}"
+                         class="alert alert-light border">
+
+                        No cards in the maybe pile.
+
+                    </div>
+
+
+                    <div class="row g-4"
+                         th:if="${!#lists.isEmpty(maybeCards)}">
+
+
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-2"
+                             th:each="card : ${maybeCards}">
+
+
+                            <div class="mtg-card h-100">
+
+
+                                <img th:if="${card.imageUrl != null}"
+                                     th:src="${card.imageUrl}"
+                                     th:alt="${card.scannedCard.name}"
+                                     class="card-image mb-2">
+
+
+                                <div th:if="${card.imageUrl == null}"
+                                     class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
+                                     style="aspect-ratio: 63 / 88;">
+
+                                    No image
+
+                                </div>
+
+
+                                <div class="card-name"
+                                     th:text="${card.scannedCard.name}">
+                                    Card name
+                                </div>
+
+
+                                <div class="card-details text-muted">
+
+                                    <span th:text="${card.scannedCard.setCode.toUpperCase()}">
+                                        SET
+                                    </span>
+
+                                    #
+
+                                    <span th:text="${card.scannedCard.collectorNumber}">
+                                        000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="price mt-1"
+                                     th:if="${card.eurPrice != null}">
+
+                                    €<span th:text="${card.eurPrice}">
+                                        0.00
+                                    </span>
+
+                                </div>
+
+
+                                <div class="text-muted small mt-1"
+                                     th:if="${card.eurPrice == null}">
+
+                                    Price unavailable
+
+                                </div>
+
+
+                                <span th:if="${card.scannedCard.foil == 'foil'}"
+                                      class="badge text-bg-info mt-1">
+
+                                    Foil
+
+                                </span>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="card-body">
 
-                    <p class="text-muted">
-                        The scan history contains cards encountered
-                        during previous reads and is used for duplicate detection.
-                    </p>
+                <!-- =========================================
+                     PREVIOUSLY SEEN
+                     ========================================= -->
 
-                    <a href="/download/history"
-                       class="btn btn-outline-primary">
-                        Download History
-                    </a>
+                <div class="tab-pane fade"
+                     id="seen"
+                     role="tabpanel">
 
-                    <a href="/history/clear"
-                       class="btn btn-outline-danger">
-                        Clear History
-                    </a>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <div>
+
+                            <h5 class="mb-1">
+                                Seen Before
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Cards already present in your historical reads.
+                            </p>
+
+                        </div>
+
+
+                        <a href="/download/seen"
+                           class="btn btn-secondary">
+
+                            Download TXT
+
+                        </a>
+
+                    </div>
+
+
+                    <div th:if="${#lists.isEmpty(seenCards)}"
+                         class="alert alert-light border">
+
+                        No previously-seen cards in this scan.
+
+                    </div>
+
+
+                    <div class="row g-4"
+                         th:if="${!#lists.isEmpty(seenCards)}">
+
+
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-2"
+                             th:each="card : ${seenCards}">
+
+
+                            <div class="mtg-card h-100">
+
+
+                                <img th:if="${card.imageUrl != null}"
+                                     th:src="${card.imageUrl}"
+                                     th:alt="${card.scannedCard.name}"
+                                     class="card-image mb-2">
+
+
+                                <div th:if="${card.imageUrl == null}"
+                                     class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
+                                     style="aspect-ratio: 63 / 88;">
+
+                                    No image
+
+                                </div>
+
+
+                                <div class="card-name"
+                                     th:text="${card.scannedCard.name}">
+                                    Card name
+                                </div>
+
+
+                                <div class="card-details text-muted">
+
+                                    <span th:text="${card.scannedCard.setCode.toUpperCase()}">
+                                        SET
+                                    </span>
+
+                                    #
+
+                                    <span th:text="${card.scannedCard.collectorNumber}">
+                                        000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="price mt-1"
+                                     th:if="${card.eurPrice != null}">
+
+                                    €<span th:text="${card.eurPrice}">
+                                        0.00
+                                    </span>
+
+                                </div>
+
+
+                                <span th:if="${card.scannedCard.foil == 'foil'}"
+                                      class="badge text-bg-info mt-1">
+
+                                    Foil
+
+                                </span>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
+
+                <!-- =========================================
+                     DUPLICATES
+                     ========================================= -->
+
+                <div class="tab-pane fade"
+                     id="duplicates"
+                     role="tabpanel">
+
+
+                    <div class="mb-3">
+
+                        <h5 class="mb-1">
+                            Duplicates in Current Scan
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Cards that appeared more than once in the uploaded scan.
+                        </p>
+
+                    </div>
+
+
+                    <div th:if="${#lists.isEmpty(duplicateCards)}"
+                         class="alert alert-light border">
+
+                        No duplicates detected.
+
+                    </div>
+
+
+                    <div class="row g-4"
+                         th:if="${!#lists.isEmpty(duplicateCards)}">
+
+
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-2"
+                             th:each="duplicate : ${duplicateCards}">
+
+
+                            <div class="mtg-card h-100">
+
+
+                                <div class="position-relative">
+
+
+                                    <img th:if="${duplicate.card.imageUrl != null}"
+                                         th:src="${duplicate.card.imageUrl}"
+                                         th:alt="${duplicate.card.scannedCard.name}"
+                                         class="card-image mb-2">
+
+
+                                    <div th:if="${duplicate.card.imageUrl == null}"
+                                         class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
+                                         style="aspect-ratio: 63 / 88;">
+
+                                        No image
+
+                                    </div>
+
+
+                                    <span class="badge bg-danger position-absolute top-0 end-0 m-2 duplicate-badge">
+
+                                        ×<span th:text="${duplicate.count}">
+                                            2
+                                        </span>
+
+                                    </span>
+
+
+                                </div>
+
+
+                                <div class="card-name"
+                                     th:text="${duplicate.card.scannedCard.name}">
+                                    Card name
+                                </div>
+
+
+                                <div class="card-details text-muted">
+
+                                    <span th:text="${duplicate.card.scannedCard.setCode.toUpperCase()}">
+                                        SET
+                                    </span>
+
+                                    #
+
+                                    <span th:text="${duplicate.card.scannedCard.collectorNumber}">
+                                        000
+                                    </span>
+
+                                </div>
+
+
+                                <div class="small mt-1">
+
+                                    <strong th:text="${duplicate.count}">
+                                        2
+                                    </strong>
+
+                                    copies in this scan
+
+                                </div>
+
+
+                                <div class="price mt-1"
+                                     th:if="${duplicate.card.eurPrice != null}">
+
+                                    €<span th:text="${duplicate.card.eurPrice}">
+                                        0.00
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
 
             </div>
 
@@ -208,11 +823,101 @@
 
     </div>
 
+
+    <!-- =====================================================
+         HISTORY
+         ===================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Scan History
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <p class="text-muted">
+
+                Scan history stores cards encountered in previous reads.
+                Duplicate detection across printings is based on Scryfall
+                Oracle IDs.
+
+            </p>
+
+
+            <div class="d-flex flex-wrap gap-2">
+
+
+                <a href="/download/history"
+                   class="btn btn-outline-primary">
+
+                    Download History
+
+                </a>
+
+
+                <a href="/history/clear"
+                   class="btn btn-outline-danger">
+
+                    Clear History
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
 </main>
 
 
+<!-- =========================================================
+     BOOTSTRAP
+     ========================================================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
+
+
+<!-- =========================================================
+     PROCESSING INDICATOR
+     ========================================================= -->
+
+<script>
+
+    const scanForm =
+        document.getElementById("scanForm");
+
+    const processButton =
+        document.getElementById("processButton");
+
+    const processingIndicator =
+        document.getElementById("processingIndicator");
+
+
+    scanForm.addEventListener("submit", function () {
+
+        processButton.disabled = true;
+
+        processButton.innerText =
+            "Processing...";
+
+        processingIndicator.classList.remove(
+            "d-none"
+        );
+
+    });
+
+</script>
+
 
 </body>
 </html>

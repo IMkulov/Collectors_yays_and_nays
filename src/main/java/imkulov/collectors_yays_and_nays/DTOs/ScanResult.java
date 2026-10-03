@@ -12,4 +12,6 @@ public class ScanResult {
     private List<ProcessedCard> collectionWorthy;
     private List<ProcessedCard> maybe;
     private List<ProcessedCard> previouslySeen;
+
+    private List<DuplicateCard> duplicates;
 }
