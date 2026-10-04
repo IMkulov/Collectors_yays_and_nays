@@ -1,68 +1,59 @@
-1 Mystic Confluence (TSR) 312
-1 Shivan Meteor (TSR) 188
-1 Pact of the Titan (TSR) 179
-1 Spider (TTSR) 6
-1 Refuse to Yield (SNC) 27
-1 Hoard Hauler (SNC) 109
-1 Widespread Thieving (SNC) 130
-1 Obscura Storefront (SNC) 252
-1 Brokers Hideout (SNC) 248
-1 Cabaretti Courtyard (SNC) 249
-1 Riveteers Overlook (SNC) 255
-1 Dusk Mangler (SNC) 77
-1 Soul of Emancipation (SNC) 223
-1 Getaway Car (SNC) 237 *F*
-1 Fish (TSNC) 4
-1 Hellspur Posse Boss (OTJ) 128
-1 Abraded Bluffs (OTJ) 251
-1 Gnawing Vermin (BRO) 101
-1 Chromatic Star (BRR) 11
-1 Underground River (BRO) 267
-1 Bitter Reunion (BRO) 127 *F*
-1 Symmetry Matrix (BRO) 252
-1 Loran's Escape (BRO) 14 *F*
-1 Artificer's Dragon (BRO) 291
-1 Tyrant of Kher Ridges (BRO) 154
-1 Yotian Dissident (BRO) 227
-1 Terisian Mindbreaker (BRO) 83
-1 Combat Courier (BRO) 77
-1 Springleaf Drum (BRR) 55
-1 Ognis, the Dragon's Lash (SNC) 325
-1 Maestros Theater (SNC) 251
-1 Structural Assault (SNC) 126
-1 Rumor Gatherer (SNC) 29
-1 Mage's Attendant (SNC) 21
-1 Hostile Takeover (SNC) 310
-1 Topiary Stomper (SNC) 160
-1 Maestros Ascendancy (SNC) 198
-1 Pongify (TSR) 79
-1 Remand (TSR) 316
-1 Ancient Stirrings (TSR) 355
-1 Lingering Souls (TSR) 296
-1 Courser of Kruphix (TSR) 359
-1 Harmonic Sliver (TSR) 254
-1 Mirri the Cursed (TSR) 125
-1 Unleash the Inferno (SNC) 229
-1 Glittering Stockpile (SNC) 107
-1 Seraphic Steed (OTJ) 232
-1 Urza's Cave (MH3) 234
-1 Decree of Justice (MH3) 263
-1 Kudo, King Among Bears (MH3) 192
-1 Step Between Worlds (OTJ) 70
-1 Grindstone (OTP) 62
-1 Dust Animus (OTJ) 9
-1 Fractured Identity (OTP) 45
-1 Bedevil (OTP) 37
-1 Spara's Headquarters (SNC) 257
-1 Speaker of the Heavens (PLST) M21-38
-1 Blooming Marsh (OTJ) 266
-1 Aven Interrupter (OTJ) 4
-1 The Key to the Vault (OTJ) 54
-1 Pest Control (BIG) 22
-1 Damnation (TSR) 106
-1 Dreams of Steel and Oil (BRO) 92
-1 Ultra Magnus, Tactician // Ultra Magnus, Armored Carrier (BOT) 15
-1 Ivory Tower (BRR) 86
-1 Fade from History (BRO) 177
-1 The Gitrog, Ravenous Ride (OTJ) 206
-1 Aetherflux Reservoir (BRR) 2
+1 Kwia Vigorbloom (FRA) 140
+1 Stingerquill Charm (FRA) 150
+1 Vindictive Triumph (FRA) 162
+1 Dedicated Commons (FRA) 175
+1 Marwyn, the Preserver (FRA) 263
+1 Winter, Tormented Loner (FRA) 240
+1 Winter, Team Player (FRA) 256
+1 Konstrari Annex (FRA) 183
+1 Serendib Sorcerer (PLC) 61
+1 Heartwood Crafter // Soul Tether (FRA) 105
+1 Artifist Acumen (FRA) 73 *F*
+1 Vigorbloom Annex (FRA) 194
+1 Skilled Battlecarver (FRA) 92
+1 Medic's Kitesail (FRA) 173
+1 Bloombrute (FRA) 124
+1 Chandra's Emberling (FRA) 76
+1 Verdant Kraken (FRA) 118
+1 Lyra, Archangel of Dawn (FRA) 201
+1 Precise Redaction (FRA) 362
+1 Teyo, the Shieldmage (WAR) 32★
+1 Saheeli, Sublime Artificer (WAR) 234★
+1 Emergency Phytomedic // Seed Suture (FRA) 130
+1 Violent Echoes (FRA) 95
+1 Way of the Paradox (FRA) 267
+1 Sphinx's Approach (FRA) 41
+1 Meticulous Commons (FRA) 184
+1 Blossom-Blessed Angel // Seed Suture (FRA) 3
+1 Divining Duelist (FRA) 29
+1 Ferocity of the Hunt (FRA) 134
+1 Command the Stage (FRA) 77
+1 Traxos, Scourge Eternal (FRA) 280
+1 Yoshimaru, Beloved Companion (FRA) 209
+1 Yoshimaru, Scrappy Stray (FRA) 269
+1 Shipwreck Marsh (FRA) 401
+1 Way of the Wildspeaker (FRA) 268 *F*
+1 Cryotheory Adept (FRA) 27
+1 Konstrari Improviser // Soul Tether (FRA) 139
+1 Ajani Unrelenting (FRA) 242
+1 Ajani Resolute (FRA) 195
+1 Unsummon (FRA) 46 *F*
+1 Wrecking Gecko (FRA) 120
+1 Mindseeker Oculus (FRA) 33
+1 Charge the Sanctum (FRA) 125 *F*
+1 Tetsuko Umezawa, Pursuer (FRA) 252
+1 Fatehold Charm (FRA) 132
+1 Massacre Girl, Most Wanted (FRA) 234
+1 Uldaros Theorix (FRA) 159
+1 Fulminous Forte (FRA) 84
+1 Yuriko, Hope from the Shadows (FRA) 226
+1 Stingerquill Annex (FRA) 190
+1 Desperate Futurescribe (FRA) 129
+1 Ballynock Trapper (EVE) 2
+1 Vraska's Final Mercy (FRA) 71
+1 Transformative Commons (FRA) 193
+1 Whiplash Wordsmith // Vicious Verse (FRA) 164
+1 Your Fate Ends Here (FRA) 24
+1 Gallia, the Merrymaker (FRA) 245
+1 Ingris Stingerquill (FRA) 137
+1 Primal Witchstalker (FRA) 144

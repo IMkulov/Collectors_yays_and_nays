@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,6 +14,5 @@ public class ProcessedCard {
     private ScannedCard scannedCard;
     private String oracleId;
     private BigDecimal eurPrice;
-
-    private String imageUrl;
+    private List<String> imageUrls;
 }

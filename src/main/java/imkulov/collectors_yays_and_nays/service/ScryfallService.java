@@ -7,6 +7,9 @@ import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -36,24 +39,39 @@ public class ScryfallService {
         );
 
         Map prices = (Map) response.get("prices");
-
         String eur = (String) prices.get("eur");
-
         if (eur != null) {
-            data.setEurPrice(
-                    new BigDecimal(eur)
-            );
+            data.setEurPrice(new BigDecimal(eur));
         }
+        List<String> imageUrls = new ArrayList<>();
 
-        Map imageUris =
-                (Map) response.get("image_uris");
-
+        Map imageUris = (Map) response.get("image_uris");
         if (imageUris != null) {
-            data.setImageUrl(
-                    (String) imageUris.get("small")
-            );
+
+            String imageUrl = (String) imageUris.get("small");
+            if (imageUrl != null) {
+                imageUrls.add(imageUrl);
+            }
         }
 
+
+        else {
+
+            List<Map> cardFaces = (List<Map>) response.get("card_faces");
+            if (cardFaces != null) {
+
+                for (Map face : cardFaces) {
+                    Map faceImageUris = (Map) face.get("image_uris");
+                    if (faceImageUris != null) {
+                        String imageUrl = (String) faceImageUris.get("small");
+                        if (imageUrl != null) {
+                            imageUrls.add(imageUrl);
+                        }
+                    }
+                }
+            }
+        }
+        data.setImageUrls(imageUrls);
         return data;
     }
 }

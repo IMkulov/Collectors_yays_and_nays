@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -13,19 +14,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
+
     <style>
 
-        .card-image {
-            width: 100%;
-            border-radius: 0.5rem;
-        }
 
         .mtg-card {
+            height: 100%;
             transition: transform 0.15s ease;
         }
 
         .mtg-card:hover {
             transform: translateY(-3px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.5rem;
         }
 
         .card-name {
@@ -42,7 +48,87 @@
         }
 
         .duplicate-badge {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .no-image {
+            aspect-ratio: 63 / 88;
+        }
+
+
+        .double-face-stack {
+            position: relative;
+
+            width: 100%;
+            aspect-ratio: 63 / 88;
+
+            margin-bottom: 0.5rem;
+
+            cursor: pointer;
+
+            overflow: visible;
+        }
+
+
+        .double-face-stack .card-face {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border-radius: 0.5rem;
+
+            transition:
+                    transform 0.25s ease,
+                    box-shadow 0.25s ease;
+        }
+
+
+        .double-face-stack .front-face {
+            z-index: 2;
+        }
+
+
+        .double-face-stack .back-face {
+            z-index: 1;
+
+            transform: translateX(12px);
+        }
+
+
+
+        .double-face-stack:hover .back-face,
+        .double-face-stack.show-back .back-face {
+            z-index: 3;
+
+            transform: translateX(0);
+
+            box-shadow:
+                    0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .double-face-stack:hover .front-face,
+        .double-face-stack.show-back .front-face {
+            transform: translateX(-12px);
+        }
+        
+        @media (max-width: 575.98px) {
+
+            .double-face-stack .back-face {
+                transform: translateX(8px);
+            }
+
+            .double-face-stack:hover .front-face,
+            .double-face-stack.show-back .front-face {
+                transform: translateX(-8px);
+            }
+
         }
 
     </style>
@@ -92,7 +178,8 @@
 
         <button type="button"
                 class="btn-close"
-                data-bs-dismiss="alert">
+                data-bs-dismiss="alert"
+                aria-label="Close">
         </button>
 
     </div>
@@ -112,7 +199,8 @@
 
         <button type="button"
                 class="btn-close"
-                data-bs-dismiss="alert">
+                data-bs-dismiss="alert"
+                aria-label="Close">
         </button>
 
     </div>
@@ -177,10 +265,15 @@
 
                     <div class="spinner-border spinner-border-sm"
                          role="status">
+
+                        <span class="visually-hidden">
+                            Processing...
+                        </span>
+
                     </div>
 
                     <span class="ms-2">
-                        Processing scan...
+                        Processing scan. This may take a while...
                     </span>
 
                 </div>
@@ -193,7 +286,7 @@
 
 
     <!-- =====================================================
-         RESULTS
+         CURRENT SCAN RESULTS
          ===================================================== -->
 
     <div class="card shadow-sm mb-4"
@@ -202,13 +295,9 @@
 
         <div class="card-header bg-white">
 
-            <div class="d-flex justify-content-between align-items-center">
-
-                <h5 class="mb-0">
-                    Current Scan
-                </h5>
-
-            </div>
+            <h5 class="mb-0">
+                Current Scan
+            </h5>
 
         </div>
 
@@ -216,9 +305,9 @@
         <div class="card-body">
 
 
-            <!-- =============================================
-                 RESULT TABS
-                 ============================================= -->
+            <!-- =================================================
+                 TABS
+                 ================================================= -->
 
             <ul class="nav nav-tabs mb-4"
                 id="resultTabs"
@@ -323,24 +412,28 @@
             </ul>
 
 
-            <!-- =============================================
+            <!-- =================================================
                  TAB CONTENT
-                 ============================================= -->
+                 ================================================= -->
 
             <div class="tab-content"
                  id="resultTabsContent">
 
 
-                <!-- =========================================
-                     COLLECTION WORTHY
-                     ========================================= -->
+                <!-- =================================================
+                     YAYS
+                     ================================================= -->
 
                 <div class="tab-pane fade show active"
                      id="collection"
                      role="tabpanel">
 
 
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-wrap
+                                justify-content-between
+                                align-items-center
+                                gap-2
+                                mb-4">
 
                         <div>
 
@@ -381,29 +474,63 @@
                              th:each="card : ${collectionCards}">
 
 
-                            <div class="mtg-card h-100">
+                            <div class="mtg-card">
 
 
-                                <img th:if="${card.imageUrl != null}"
-                                     th:src="${card.imageUrl}"
+                                <!-- SINGLE-FACED CARD -->
+
+                                <img th:if="${card.imageUrls != null
+                                             && #lists.size(card.imageUrls) == 1}"
+                                     th:src="${card.imageUrls[0]}"
                                      th:alt="${card.scannedCard.name}"
                                      class="card-image mb-2">
 
 
-                                <div th:if="${card.imageUrl == null}"
-                                     class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
-                                     style="aspect-ratio: 63 / 88;">
+                                <!-- DOUBLE-FACED CARD -->
 
-                                    No image
+                                <div th:if="${card.imageUrls != null
+                                            && #lists.size(card.imageUrls) > 1}"
+                                     class="double-face-stack"
+                                     title="Hover or click to view reverse face">
+
+                                    <img th:src="${card.imageUrls[0]}"
+                                         th:alt="${card.scannedCard.name + ' front'}"
+                                         class="card-face front-face">
+
+                                    <img th:src="${card.imageUrls[1]}"
+                                         th:alt="${card.scannedCard.name + ' back'}"
+                                         class="card-face back-face">
 
                                 </div>
 
+
+                                <!-- NO IMAGE -->
+
+                                <div th:if="${card.imageUrls == null
+                                            || #lists.isEmpty(card.imageUrls)}"
+                                     class="no-image border rounded
+                                            bg-light
+                                            d-flex
+                                            align-items-center
+                                            justify-content-center
+                                            mb-2">
+
+                                    <span class="text-muted">
+                                        No image
+                                    </span>
+
+                                </div>
+
+
+                                <!-- NAME -->
 
                                 <div class="card-name"
                                      th:text="${card.scannedCard.name}">
-                                    Card name
+                                    Card Name
                                 </div>
 
+
+                                <!-- SET -->
 
                                 <div class="card-details text-muted">
 
@@ -419,6 +546,8 @@
 
                                 </div>
 
+
+                                <!-- PRICE -->
 
                                 <div class="price mt-1"
                                      th:if="${card.eurPrice != null}">
@@ -438,8 +567,10 @@
                                 </div>
 
 
+                                <!-- FOIL -->
+
                                 <span th:if="${card.scannedCard.foil == 'foil'}"
-                                      class="badge text-bg-info mt-1">
+                                      class="badge text-bg-info mt-2">
 
                                     Foil
 
@@ -455,16 +586,20 @@
                 </div>
 
 
-                <!-- =========================================
+                <!-- =================================================
                      MAYBE
-                     ========================================= -->
+                     ================================================= -->
 
                 <div class="tab-pane fade"
                      id="maybe"
                      role="tabpanel">
 
 
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-wrap
+                                justify-content-between
+                                align-items-center
+                                gap-2
+                                mb-4">
 
                         <div>
 
@@ -505,29 +640,63 @@
                              th:each="card : ${maybeCards}">
 
 
-                            <div class="mtg-card h-100">
+                            <div class="mtg-card">
 
 
-                                <img th:if="${card.imageUrl != null}"
-                                     th:src="${card.imageUrl}"
+                                <!-- SINGLE-FACED -->
+
+                                <img th:if="${card.imageUrls != null
+                                             && #lists.size(card.imageUrls) == 1}"
+                                     th:src="${card.imageUrls[0]}"
                                      th:alt="${card.scannedCard.name}"
                                      class="card-image mb-2">
 
 
-                                <div th:if="${card.imageUrl == null}"
-                                     class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
-                                     style="aspect-ratio: 63 / 88;">
+                                <!-- DOUBLE-FACED -->
 
-                                    No image
+                                <div th:if="${card.imageUrls != null
+                                            && #lists.size(card.imageUrls) > 1}"
+                                     class="double-face-stack"
+                                     title="Hover or click to view reverse face">
+
+                                    <img th:src="${card.imageUrls[0]}"
+                                         th:alt="${card.scannedCard.name + ' front'}"
+                                         class="card-face front-face">
+
+                                    <img th:src="${card.imageUrls[1]}"
+                                         th:alt="${card.scannedCard.name + ' back'}"
+                                         class="card-face back-face">
 
                                 </div>
 
+
+                                <!-- NO IMAGE -->
+
+                                <div th:if="${card.imageUrls == null
+                                            || #lists.isEmpty(card.imageUrls)}"
+                                     class="no-image border rounded
+                                            bg-light
+                                            d-flex
+                                            align-items-center
+                                            justify-content-center
+                                            mb-2">
+
+                                    <span class="text-muted">
+                                        No image
+                                    </span>
+
+                                </div>
+
+
+                                <!-- NAME -->
 
                                 <div class="card-name"
                                      th:text="${card.scannedCard.name}">
-                                    Card name
+                                    Card Name
                                 </div>
 
+
+                                <!-- SET -->
 
                                 <div class="card-details text-muted">
 
@@ -543,6 +712,8 @@
 
                                 </div>
 
+
+                                <!-- PRICE -->
 
                                 <div class="price mt-1"
                                      th:if="${card.eurPrice != null}">
@@ -562,8 +733,10 @@
                                 </div>
 
 
+                                <!-- FOIL -->
+
                                 <span th:if="${card.scannedCard.foil == 'foil'}"
-                                      class="badge text-bg-info mt-1">
+                                      class="badge text-bg-info mt-2">
 
                                     Foil
 
@@ -579,16 +752,20 @@
                 </div>
 
 
-                <!-- =========================================
-                     PREVIOUSLY SEEN
-                     ========================================= -->
+                <!-- =================================================
+                     SEEN BEFORE
+                     ================================================= -->
 
                 <div class="tab-pane fade"
                      id="seen"
                      role="tabpanel">
 
 
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-wrap
+                                justify-content-between
+                                align-items-center
+                                gap-2
+                                mb-4">
 
                         <div>
 
@@ -597,7 +774,7 @@
                             </h5>
 
                             <p class="text-muted mb-0">
-                                Cards already present in your historical reads.
+                                Cards already present in previous scan history.
                             </p>
 
                         </div>
@@ -629,29 +806,63 @@
                              th:each="card : ${seenCards}">
 
 
-                            <div class="mtg-card h-100">
+                            <div class="mtg-card">
 
 
-                                <img th:if="${card.imageUrl != null}"
-                                     th:src="${card.imageUrl}"
+                                <!-- SINGLE-FACED -->
+
+                                <img th:if="${card.imageUrls != null
+                                             && #lists.size(card.imageUrls) == 1}"
+                                     th:src="${card.imageUrls[0]}"
                                      th:alt="${card.scannedCard.name}"
                                      class="card-image mb-2">
 
 
-                                <div th:if="${card.imageUrl == null}"
-                                     class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
-                                     style="aspect-ratio: 63 / 88;">
+                                <!-- DOUBLE-FACED -->
 
-                                    No image
+                                <div th:if="${card.imageUrls != null
+                                            && #lists.size(card.imageUrls) > 1}"
+                                     class="double-face-stack"
+                                     title="Hover or click to view reverse face">
+
+                                    <img th:src="${card.imageUrls[0]}"
+                                         th:alt="${card.scannedCard.name + ' front'}"
+                                         class="card-face front-face">
+
+                                    <img th:src="${card.imageUrls[1]}"
+                                         th:alt="${card.scannedCard.name + ' back'}"
+                                         class="card-face back-face">
 
                                 </div>
 
+
+                                <!-- NO IMAGE -->
+
+                                <div th:if="${card.imageUrls == null
+                                            || #lists.isEmpty(card.imageUrls)}"
+                                     class="no-image border rounded
+                                            bg-light
+                                            d-flex
+                                            align-items-center
+                                            justify-content-center
+                                            mb-2">
+
+                                    <span class="text-muted">
+                                        No image
+                                    </span>
+
+                                </div>
+
+
+                                <!-- NAME -->
 
                                 <div class="card-name"
                                      th:text="${card.scannedCard.name}">
-                                    Card name
+                                    Card Name
                                 </div>
 
+
+                                <!-- SET -->
 
                                 <div class="card-details text-muted">
 
@@ -668,6 +879,8 @@
                                 </div>
 
 
+                                <!-- PRICE -->
+
                                 <div class="price mt-1"
                                      th:if="${card.eurPrice != null}">
 
@@ -678,8 +891,18 @@
                                 </div>
 
 
+                                <div class="text-muted small mt-1"
+                                     th:if="${card.eurPrice == null}">
+
+                                    Price unavailable
+
+                                </div>
+
+
+                                <!-- FOIL -->
+
                                 <span th:if="${card.scannedCard.foil == 'foil'}"
-                                      class="badge text-bg-info mt-1">
+                                      class="badge text-bg-info mt-2">
 
                                     Foil
 
@@ -695,16 +918,16 @@
                 </div>
 
 
-                <!-- =========================================
+                <!-- =================================================
                      DUPLICATES
-                     ========================================= -->
+                     ================================================= -->
 
                 <div class="tab-pane fade"
                      id="duplicates"
                      role="tabpanel">
 
 
-                    <div class="mb-3">
+                    <div class="mb-4">
 
                         <h5 class="mb-1">
                             Duplicates in Current Scan
@@ -733,28 +956,64 @@
                              th:each="duplicate : ${duplicateCards}">
 
 
-                            <div class="mtg-card h-100">
+                            <div class="mtg-card">
 
 
                                 <div class="position-relative">
 
 
-                                    <img th:if="${duplicate.card.imageUrl != null}"
-                                         th:src="${duplicate.card.imageUrl}"
+                                    <!-- SINGLE-FACED -->
+
+                                    <img th:if="${duplicate.card.imageUrls != null
+                                                 && #lists.size(duplicate.card.imageUrls) == 1}"
+                                         th:src="${duplicate.card.imageUrls[0]}"
                                          th:alt="${duplicate.card.scannedCard.name}"
                                          class="card-image mb-2">
 
 
-                                    <div th:if="${duplicate.card.imageUrl == null}"
-                                         class="border rounded bg-light d-flex align-items-center justify-content-center mb-2"
-                                         style="aspect-ratio: 63 / 88;">
+                                    <!-- DOUBLE-FACED -->
 
-                                        No image
+                                    <div th:if="${duplicate.card.imageUrls != null
+                                                && #lists.size(duplicate.card.imageUrls) > 1}"
+                                         class="double-face-stack"
+                                         title="Hover or click to view reverse face">
+
+                                        <img th:src="${duplicate.card.imageUrls[0]}"
+                                             th:alt="${duplicate.card.scannedCard.name + ' front'}"
+                                             class="card-face front-face">
+
+                                        <img th:src="${duplicate.card.imageUrls[1]}"
+                                             th:alt="${duplicate.card.scannedCard.name + ' back'}"
+                                             class="card-face back-face">
 
                                     </div>
 
 
-                                    <span class="badge bg-danger position-absolute top-0 end-0 m-2 duplicate-badge">
+                                    <!-- NO IMAGE -->
+
+                                    <div th:if="${duplicate.card.imageUrls == null
+                                                || #lists.isEmpty(duplicate.card.imageUrls)}"
+                                         class="no-image border rounded
+                                                bg-light
+                                                d-flex
+                                                align-items-center
+                                                justify-content-center
+                                                mb-2">
+
+                                        <span class="text-muted">
+                                            No image
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- DUPLICATE COUNT -->
+
+                                    <span class="badge bg-danger
+                                                 position-absolute
+                                                 top-0 end-0 m-2
+                                                 duplicate-badge"
+                                          style="z-index: 10;">
 
                                         ×<span th:text="${duplicate.count}">
                                             2
@@ -766,11 +1025,15 @@
                                 </div>
 
 
+                                <!-- NAME -->
+
                                 <div class="card-name"
                                      th:text="${duplicate.card.scannedCard.name}">
-                                    Card name
+                                    Card Name
                                 </div>
 
+
+                                <!-- SET -->
 
                                 <div class="card-details text-muted">
 
@@ -787,6 +1050,8 @@
                                 </div>
 
 
+                                <!-- COPY COUNT -->
+
                                 <div class="small mt-1">
 
                                     <strong th:text="${duplicate.count}">
@@ -798,6 +1063,8 @@
                                 </div>
 
 
+                                <!-- PRICE -->
+
                                 <div class="price mt-1"
                                      th:if="${duplicate.card.eurPrice != null}">
 
@@ -806,6 +1073,16 @@
                                     </span>
 
                                 </div>
+
+
+                                <!-- FOIL -->
+
+                                <span th:if="${duplicate.card.scannedCard.foil == 'foil'}"
+                                      class="badge text-bg-info mt-2">
+
+                                    Foil
+
+                                </span>
 
 
                             </div>
@@ -843,9 +1120,9 @@
 
             <p class="text-muted">
 
-                Scan history stores cards encountered in previous reads.
-                Duplicate detection across printings is based on Scryfall
-                Oracle IDs.
+                Scan history stores cards encountered during previous reads.
+                Different printings of the same card are recognised through
+                their Scryfall Oracle ID.
 
             </p>
 
@@ -887,11 +1164,11 @@
 </script>
 
 
-<!-- =========================================================
-     PROCESSING INDICATOR
-     ========================================================= -->
-
 <script>
+
+    /* ========================================================
+       PROCESSING INDICATOR
+       ======================================================== */
 
     const scanForm =
         document.getElementById("scanForm");
@@ -903,21 +1180,45 @@
         document.getElementById("processingIndicator");
 
 
-    scanForm.addEventListener("submit", function () {
+    if (scanForm) {
 
-        processButton.disabled = true;
+        scanForm.addEventListener("submit", function () {
 
-        processButton.innerText =
-            "Processing...";
+            processButton.disabled = true;
 
-        processingIndicator.classList.remove(
-            "d-none"
-        );
+            processButton.innerText =
+                "Processing...";
+
+            processingIndicator.classList.remove(
+                "d-none"
+            );
+
+        });
+
+    }
+
+
+    /* ========================================================
+       DOUBLE-FACED CARD SUPPORT
+       ======================================================== */
+
+    const doubleFacedCards =
+        document.querySelectorAll(".double-face-stack");
+
+
+    doubleFacedCards.forEach(function (stack) {
+
+        stack.addEventListener("click", function () {
+
+            stack.classList.toggle(
+                "show-back"
+            );
+
+        });
 
     });
 
 </script>
-
 
 </body>
 </html>

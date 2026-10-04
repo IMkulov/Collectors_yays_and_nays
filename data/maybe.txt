@@ -1,11 +1,51 @@
-1 Grave Scrabbler (TSR) 118
-1 Amrou Seekers (TSR) 2
-1 Pendelhaven Elder (TSR) 222
-1 Body Dropper (SNC) 168
-1 Mayhem Patrol (SNC) 114
-1 Illicit Shipment (SNC) 83
-1 Tramway Station (SNC) 356
-1 Tavern Swindler (SNC) 96
-1 Junkyard Genius (BRO) 214
-1 Forging the Anchor (BRO) 50 *F*
-1 Gilded Pinions (SNC) 238
+1 Ruric Thar, Biomagus (FRA) 219
+1 Ruric Thar, Magecrusher (FRA) 265
+1 Konstrari Charm (FRA) 138
+1 Kiora of Fire and Ashes (FRA) 247
+1 Rise of the Deathbringer (FRA) 63
+1 Mabel, Bitter Recluse (FRA) 233
+1 Mabel, Valley Hero (FRA) 274
+1 Hapatra, the Desert Frost (FRA) 215
+1 Arcane Amphisbaena (FRA) 97
+1 Rank Rat (FRA) 61
+1 Fblthp, Impossibly Lost (FRA) 213
+1 Twisted Fates (FRA) 158
+1 Lyra, Tolarian Archangel (FRA) 217
+1 Unflinching Hortimancer (FRA) 23
+1 Surveillance Phantasm (FRA) 42
+1 Silence the Echo (FRA) 66
+1 Perfected Theory (FRA) 34
+1 Bestial Incursion (FRA) 98
+1 Extended Absence (FRA) 54
+1 Last Gasp (FRA) 56
+1 Tether Technician (FRA) 94
+1 Shatterwing Pegasus (FRA) 21
+1 Awaken the Inferno (FRA) 74
+1 Void Extrapolator // Omit Variables (FRA) 70
+1 Blessed Ghoul (FRA) 123
+1 Rewrite Regrets (FRA) 62
+1 Kiora of Salt and Sand (FRA) 273
+1 Variable Chaser // Arc of Fortune (FRA) 47
+1 Inspired Tethermage (FRA) 109
+1 Icy Reception (FRA) 30
+1 Theoretical Necromancer (FRA) 69
+1 Afterthought Sentry (FRA) 166
+1 Vigorbloom Vanguard // Seed Suture (FRA) 161
+1 Tinybones, Pocket Nuisance (FRA) 237
+1 Rampart Hunter (FRA) 60
+1 Heartstring Puller (FRA) 86
+1 Multiply by Zero (FRA) 58
+1 Way of the Mind Sculptor (FRA) 224
+1 Room of Refuge (FRA) 188
+1 Surgical Precision (FRA) 22
+1 Fatehold Chronologist // Peer Review (FRA) 133
+1 Break Under Pressure (FRA) 50
+1 Vinelasher Adept (FRA) 119
+1 Restore with Empathy (FRA) 112
+1 Titanbones, Towering Heart (FRA) 266
+1 Hallway Heckler // Vicious Verse (FRA) 85
+1 Scythe Leopard (PBFZ) 188 *F*
+1 Proft, Sinister Mastermind (FRA) 235
+1 Germinate Recruits (FRA) 9
+1 Traxos, Academy Guardian (FRA) 222 *F*
+1 Guiding Hydra (FRA) 11 *F*

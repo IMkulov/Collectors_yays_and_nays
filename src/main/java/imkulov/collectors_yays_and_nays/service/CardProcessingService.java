@@ -24,12 +24,11 @@ public class CardProcessingService {
             ScryfallCardData scryfallData =
                     scryfallService.getCardData(card.getScryfallId());
 
-            processedCards.add(
-                    new ProcessedCard(
+            processedCards.add(new ProcessedCard(
                             card,
                             scryfallData.getOracleId(),
                             scryfallData.getEurPrice(),
-                            scryfallData.getImageUrl()
+                            scryfallData.getImageUrls()
                     )
             );
         }
